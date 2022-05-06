@@ -1,0 +1,7 @@
+name: hw1_env
+dependencies:
+	- python=3.8
+	- pip
+	- pip:
+		- numpy==1.202
+		- pandas==1.2.4
