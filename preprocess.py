@@ -1,9 +1,8 @@
-from sklearn.ensemble import RandomForestClassifier
 import argparse
-import pandas as pd
-import pickle
 import numpy as np
+import pandas as pd
 import os
+import pickle
 import regex as re
 
 
@@ -27,7 +26,8 @@ def reader(input_folder='data/train', interpolate=True):
     return df
 
 
-def aggregate(data, mean=True, std=True, aggmin=True, aggmax=True, skew=True, kurt=True, lastrows=False)-> pd.DataFrame:
+def aggregate(data, mean=True, std=True, aggmin=True, aggmax=True, skew=True, kurt=True,
+              lastrows=False) -> pd.DataFrame:
     """
     :param data: df to be aggregated
     :param lastrows:
@@ -63,15 +63,15 @@ def aggregate(data, mean=True, std=True, aggmin=True, aggmax=True, skew=True, ku
 
 def engineer_features(df, train=True, mean=True, std=True, aggmin=True, aggmax=True, skew=True,
                       kurt=True):
-    #print('Droping Unit1, Unit2, HospAdmTime, ICULOS \n')
-    #df.drop(['Unit1', 'Unit2', 'HospAdmTime', 'ICULOS'], axis=1, inplace=True)
-    #df = pd.get_dummies(df, columns=['Gender'])
+    # print('Droping Unit1, Unit2, HospAdmTime, ICULOS \n')
+    # df.drop(['Unit1', 'Unit2', 'HospAdmTime', 'ICULOS'], axis=1, inplace=True)
+    # df = pd.get_dummies(df, columns=['Gender'])
     if train:
         file_name = 'traintransformed.pkl'
     else:
         file_name = 'testtransformed.pkl'
     print('Aggregating...')
-    df = aggregate(df, mean, std, aggmin, aggmax, skew, kurt)
+    df = aggregate(df, mean, std, aggmin, aggmax, skew, kurt, 10)
     # try to add something smart here
     print('Saving file..')
     df.to_pickle(file_name)
@@ -79,28 +79,17 @@ def engineer_features(df, train=True, mean=True, std=True, aggmin=True, aggmax=T
     return df
 
 
-def main(test_folder, trained_models, model_Type):
-    filename = str(trained_models) + str('\\') + str(model_Type) + '.pkl'
-    print(filename)
-    test = reader(test_folder)
-    test = engineer_features(test, train=False)
-    ids = test['patient_id_max']
-    X_test, y_test = test.drop(['SepsisLabel_max', 'patient_id_max'], axis=1), test['SepsisLabel_max']
-    model = pickle.load(open(filename, 'rb'))
-    answers = {'Id': ids, 'SepsisLabel': model.predict(X_test).astype(int)}
-    pd.DataFrame(answers)[['Id', 'SepsisLabel']].to_csv('prediction.csv', index=False, header=False)
-    return
+def preprocess(data_folder):
+    print('Starting preproocessing...')
+    df = reader(data_folder)
+    newdf = engineer_features(df)
+    file_name = f'data/{data_folder}_raw.csv'
+    return file_name
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Prediction Arguments')
-    parser.add_argument('--test_folder', type=str, help='path to test data',
-                        default='data/test')
-    parser.add_argument('--trained_models', type=str, help='path to trained models',
-                        default='trained_models')
-    parser.add_argument('--model_Type', type=str,
-                        help="model type: logistic_regression', 'random_forest', 'SVM', 'GradientBoost', "
-                             "'DecisionTree', 'MLP', 'XGB'",
-                        default='XGB')
+    parser = argparse.ArgumentParser(description='Data Preprocessing...')
+    parser.add_argument('--folder', type=str, help='path to folder containing patients psvs',
+                        default='data/train')
     args = parser.parse_args()
-    main(args.test_folder, args.trained_models, args.model_Type)
+    preprocess(args.folder)

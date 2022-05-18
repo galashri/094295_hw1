@@ -5,3 +5,13 @@ dependencies:
 	- pip:
 		- numpy==1.202
 		- pandas==1.2.4
+		- scipy
+		- matplotlib
+		- pandas
+		- scikit-learn
+		- missingno
+		- feature_engine
+		- pylab-sdk
+		- seaborn
+		- xgboost
+		- researchpy
