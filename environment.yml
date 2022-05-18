@@ -1,6 +1,7 @@
 name: hw1_env
 dependencies:
   - python=3.9.12
+  - libgcc-ng=7.5.0
   - pip=21.0.1
   - pip:
     - numpy==1.20.2
@@ -11,7 +12,6 @@ dependencies:
     - matplotlib==3.4.1
     - parso==0.7.1
     - xgboost==1.6.1
-    - libgcc-ng==7.5.0
     - backcall==0.2.0
     - colorama==0.4.4
     - cycler==0.10.0
