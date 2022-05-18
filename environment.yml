@@ -1,5 +1,7 @@
 name: hw1_env
 dependencies:
+  - libgcc-ng=7.5.0
+  - __glibc=2.17
   - python=3.9.12
   - Pillow=8.2.0
   - PyYAML=5.4.1
