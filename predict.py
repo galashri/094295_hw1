@@ -80,7 +80,7 @@ def engineer_features(df, train=True, mean=True, std=True, aggmin=True, aggmax=T
 
 
 def main(test_folder, trained_models, model_Type):
-    filename = str(trained_models) + str('\\') + str(model_Type) + '.pkl'
+    filename = str(trained_models) + str('/') + str(model_Type) + '.pkl'
     print(filename)
     test = reader(test_folder)
     test = engineer_features(test, train=False)
