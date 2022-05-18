@@ -22,7 +22,9 @@ Trained Models list - logistic_regression', 'random_forest', 'SVM', 'GradientBoo
 
 ## Training
 
-To train our advanced models run the Trainer.py file. it will create "trained_models" folder and the models will be saved in it
+To train our advanced models run the Trainer.py file. it will create "trained_models" folder and the models will be saved in it.
+
+Note: the feature engineering used in Trainer.py for all models, is as described at the Feature selection section in the task report.
 
  
 ## Notebooks List
