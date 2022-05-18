@@ -2,8 +2,8 @@ name: hw1_env
 dependencies:
   - pip=21.0.1
   - pip:
-    - numpy==1.202
-    - pandas==1.2.4
+    - numpy==1.18.4
+    - pandas==1.0.3
     - regex==2022.4.24
     - ipython-genutils==0.2.0
     - typing-extensions==4.2.0
