@@ -23,7 +23,6 @@ def reader(input_folder='data/train', interpolate=True):
             pdf.interpolate(limit_direction='both', axis=0, inplace=True)  # show first hist without it
         dfs.append(pdf)
     df = pd.concat(dfs, axis=0, ignore_index=True)
-    # df.to_pickle(file_name)
     return df
 
 
@@ -94,7 +93,7 @@ def main(test_folder, trained_models, model_Type):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Prediction Arguments')
-    parser.add_argument('--test_folder', type=str, help='path to test data',
+    parser.add_argument('test_folder', type=str, help='path to test data',
                         default='data/test')
     parser.add_argument('--trained_models', type=str, help='path to trained models',
                         default='trained_models')
